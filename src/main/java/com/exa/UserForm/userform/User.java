@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
+//User schema class
 @EntityScan
 public class User
 {
