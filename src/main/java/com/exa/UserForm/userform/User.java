@@ -3,28 +3,32 @@ package com.exa.UserForm.userform;
 
 import java.util.Date;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+//import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
-
-
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 //User schema class
-@EntityScan
+@Document(collection = "user")
 public class User
 {
+	@Transient
+	public static final String SEQUENCE_NAME = "user_sequence";
+	
 	@Id
+	private long id;
+	
 	private String firstName;
     private String lastName;
     private String email;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
-
-    
+   
     public User()
     {
-   
+    	
     }
 
     
@@ -38,6 +42,15 @@ public class User
         this.dateOfBirth = dateOfBirth;
     }
     
+    
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
  
     public String getfirstName()
     {
