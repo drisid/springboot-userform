@@ -12,6 +12,9 @@ public class UserFormService
 	
     @Autowired
     public UserFormRepository userformrepository;
+    
+    @Autowired
+    private SequenceGeneratorService sequencegeneratorservice;
 
    /* private List<User> users = new ArrayList <User> (Arrays.asList(
         new User("1", "Siddharth", "GR", "abc@gmail.com", 12-06-1995),
@@ -33,22 +36,24 @@ public class UserFormService
         return users;
     }
 
-        public User getUser(String id) 
+       public User getUser(long id) 
         {
             return userformrepository.findById(id).get();
         }
     
         public void addUser(User user)
         {
+        	
             userformrepository.save(user);
         }
 
-        public void updateUser(User user, String id)
+        public void updateUser(User user, long id)
         {
+        	
             userformrepository.save(user);
         }
 
-        public void deleteUser(String id)
+        public void deleteUser(long id)
         {
             userformrepository.deleteById(id);
         }
