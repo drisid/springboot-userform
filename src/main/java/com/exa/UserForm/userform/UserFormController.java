@@ -16,6 +16,9 @@ public class UserFormController
 {
     @Autowired
     private UserFormService userformservice;
+    
+    @Autowired
+    private SequenceGeneratorService sequencegeneratorservice;
 
     //Returning objects from controller
     @RequestMapping("/Users")
@@ -25,7 +28,7 @@ public class UserFormController
     }
 
     @RequestMapping("/Users/{id}")
-    public User getUser(@PathVariable String id)
+    public User getUser(@PathVariable long id)
     {
         return userformservice.getUser(id);
     }
@@ -33,19 +36,28 @@ public class UserFormController
     @RequestMapping(value = "/Users/AddUser", method = RequestMethod.POST)
     public void addUser(@RequestBody User user)
     {
-        userformservice.addUser(user);
-        
+    	//generate sequence
+    	if(user.getId() == 0)
+    	{
+    		user.setId(sequencegeneratorservice.generateSequence(User.SEQUENCE_NAME));
+    		userformservice.addUser(user);
+    	}
+    	else
+    	{
+    		userformservice.addUser(user);
+    	}
     }
 
     @RequestMapping(value = "/Users/{id}", method = RequestMethod.PUT)
-    public void updateUser(@RequestBody User user, @PathVariable String id)
+    public void updateUser(@RequestBody User user, @PathVariable long id)
     {
+    	//user.setId(sequencegeneratorservice.generateSequence(User.SEQUENCE_NAME));
         userformservice.updateUser(user,id);
     }
 
     @RequestMapping(value = "/Users/{id}", method = RequestMethod.DELETE)
-    public void deleteUser(@PathVariable String id)
-    {
+   public void deleteUser(@PathVariable long id)
+   {
         userformservice.deleteUser(id);
     }
    
